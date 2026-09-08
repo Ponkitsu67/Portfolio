@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel S. Infante Jr. — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2631;
+    --slate:#3F4E4F;
+    --ice:#A5C8D6;
+    --paper:#F0F4F8;
+    --sage:#D9E4E0;
+    --max:1120px;
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeIn{
+    from{ opacity:0; }
+    to{ opacity:1; }
+  }
+  @keyframes softFloat{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-8px); }
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--navy);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    margin:0;
+    line-height:1.15;
+    font-weight:600;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.02em;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--ice);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(27,38,49,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--slate);
+  }
+  .nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+  }
+  .nav-mark{
+    color:var(--paper);
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    text-decoration:none;
+    transition:letter-spacing .3s ease, color .3s ease;
+  }
+  .nav-mark span{ color:var(--ice); transition:color .3s ease; }
+  .nav-mark:hover{ letter-spacing:.03em; }
+  .nav-mark:hover span{ color:var(--paper); }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nav-links a{
+    position:relative;
+    color:var(--sage);
+    text-decoration:none;
+    font-size:.92rem;
+    padding-bottom:3px;
+    transition:color .25s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:100%; height:1px;
+    background:var(--ice);
+    transform:scaleX(0);
+    transform-origin:right;
+    transition:transform .3s ease;
+  }
+  .nav-links a:hover{ color:var(--ice); }
+  .nav-links a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--navy);
+    color:var(--paper);
+    padding:96px 0 88px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.3fr .8fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero-kicker{
+    color:var(--ice);
+    font-size:.85rem;
+    margin:0 0 14px;
+    opacity:0;
+    animation:fadeUp .7s ease .05s forwards;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 5vw, 3.4rem);
+    color:var(--paper);
+    opacity:0;
+    animation:fadeUp .7s ease .15s forwards;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--ice);
+  }
+  .hero p.role{
+    margin:16px 0 0;
+    font-size:1.15rem;
+    color:var(--sage);
+    max-width:46ch;
+    opacity:0;
+    animation:fadeUp .7s ease .28s forwards;
+  }
+  .hero-meta{
+    margin:32px 0 0;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 26px;
+    font-size:.88rem;
+    color:var(--sage);
+    opacity:0;
+    animation:fadeUp .7s ease .4s forwards;
+  }
+  .hero-meta li{ position:relative; padding-left:16px; }
+  .hero-meta li::before{
+    content:"";
+    position:absolute;
+    left:0; top:.55em;
+    width:6px; height:6px;
+    background:var(--ice);
+  }
+  .hero-cta{
+    margin-top:36px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    opacity:0;
+    animation:fadeUp .7s ease .52s forwards;
+  }
+  .btn{
+    display:inline-block;
+    padding:13px 24px;
+    text-decoration:none;
+    font-size:.92rem;
+    font-weight:500;
+    border:1px solid var(--ice);
+    transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .btn-solid{
+    background:var(--ice);
+    color:var(--navy);
+  }
+  .btn-solid:hover{
+    background:var(--paper);
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px -8px rgba(0,0,0,.35);
+  }
+  .btn-outline{
+    color:var(--paper);
+    border-color:var(--slate);
+  }
+  .btn-outline:hover{
+    border-color:var(--ice);
+    color:var(--ice);
+    transform:translateY(-3px);
+  }
+
+  .hero-frame{
+    position:relative;
+    aspect-ratio:1/1.05;
+    border:1px solid var(--slate);
+    padding:14px;
+    opacity:0;
+    animation:fadeIn 1s ease .3s forwards;
+  }
+  .hero-frame::before,
+  .hero-frame::after,
+  .hero-frame-photo::before,
+  .hero-frame-photo::after{
+    content:"";
+    position:absolute;
+    width:22px; height:22px;
+    border:2px solid var(--ice);
+  }
+  .hero-frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .hero-frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+  .hero-frame-photo{ position:relative; height:100%; overflow:hidden; }
+  .hero-frame-photo img{
+    width:100%; height:100%; object-fit:cover;
+    filter:grayscale(.15) contrast(1.03);
+    transition:transform .6s ease, filter .6s ease;
+  }
+  .hero-frame-photo:hover img{
+    transform:scale(1.06);
+    filter:grayscale(0) contrast(1.03);
+  }
+  .hero-frame-photo::before{ top:-1px; right:-1px; border-left:none; border-bottom:none; }
+  .hero-frame-photo::after{ bottom:-1px; left:-1px; border-right:none; border-top:none; }
+
+  /* ---------- SECTION shell ---------- */
+  section{ padding:88px 0; }
+  .section-head{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    align-items:baseline;
+    gap:18px;
+    margin-bottom:44px;
+  }
+  .section-num{
+    font-size:.8rem;
+    color:var(--slate);
+  }
+  .section-head h2{
+    font-size:clamp(1.5rem, 3vw, 2rem);
+  }
+  .section-head hr{
+    border:none;
+    border-top:1px solid var(--sage);
+    margin:14px 0 0;
+    grid-column:1/-1;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:56px;
+  }
+  .about-grid p{
+    font-size:1.05rem;
+    max-width:60ch;
+    color:var(--navy);
+  }
+  .about-grid p + p{ margin-top:18px; }
+
+  .skills{
+    background:var(--paper);
+    border:1px solid var(--sage);
+    padding:26px 28px;
+  }
+  .skill-row{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:14px;
+    padding:12px 10px;
+    margin:0 -10px;
+    border-top:1px solid var(--sage);
+    font-size:.92rem;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .skill-row:first-child{ border-top:none; }
+  .skill-row:hover{
+    background:var(--sage);
+    transform:translateX(4px);
+  }
+  .skill-row dt{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--slate);
+    font-size:.78rem;
+    padding-top:2px;
+  }
+  .skill-row dd{ margin:0; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{ background:var(--navy); color:var(--paper); }
+  .projects .section-num{ color:var(--sage); }
+  .projects .section-head hr{ border-top-color:var(--slate); }
+
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px;
+  }
+  .card{
+    border:1px solid var(--slate);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:var(--ice);
+    box-shadow:0 18px 34px -14px rgba(0,0,0,.5);
+  }
+  .card-media{
+    aspect-ratio:16/10;
+    overflow:hidden;
+    border-bottom:1px solid var(--slate);
+  }
+  .card-media img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .card:hover .card-media img{ transform:scale(1.08); }
+  .card-body{ padding:22px 24px 26px; flex:1; display:flex; flex-direction:column; }
+  .card-meta{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    color:var(--ice);
+    margin-bottom:10px;
+  }
+  .card h3{ font-size:1.2rem; color:var(--paper); margin-bottom:10px; }
+  .card p{ color:var(--sage); font-size:.95rem; margin:0; flex:1; }
+  .card-tags{
+    margin-top:18px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    font-size:.72rem;
+  }
+  .card-tags span{
+    border:1px solid var(--slate);
+    padding:4px 9px;
+    color:var(--sage);
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .card-tags span:hover{
+    background:var(--ice);
+    color:var(--navy);
+    border-color:var(--ice);
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-list{
+    list-style:none;
+    margin:0; padding:0;
+    max-width:640px;
+  }
+  .edu-item{
+    display:grid;
+    grid-template-columns:100px 52px 1fr;
+    gap:20px;
+    padding:22px 10px;
+    margin:0 -10px;
+    border-top:1px solid var(--sage);
+    align-items:center;
+    transition:background .3s ease, transform .3s ease;
+  }
+  .edu-item:last-child{ border-bottom:1px solid var(--sage); }
+  .edu-item:hover{
+    background:var(--sage);
+    transform:translateX(6px);
+  }
+  .edu-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.82rem;
+    color:var(--slate);
+    padding-top:3px;
+  }
+  .edu-logo{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+    transition:transform .35s ease;
+  }
+  .edu-item:hover .edu-logo{
+    transform:scale(1.12) rotate(-3deg);
+  }
+  .edu-item h3{ font-size:1.05rem; margin-bottom:4px; }
+  .edu-item p{ margin:0; color:var(--slate); font-size:.92rem; }
+
+  @media (max-width:600px){
+    .edu-item{ grid-template-columns:44px 1fr; }
+    .edu-item .edu-year{ grid-column:1/-1; order:-1; }
+  }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{
+    background:var(--navy);
+    color:var(--paper);
+    padding:88px 0 40px;
+  }
+  .contact-inner{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:40px;
+    align-items:end;
+    padding-bottom:44px;
+    border-bottom:1px solid var(--slate);
+  }
+  .contact h2{
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    max-width:14ch;
+  }
+  .contact-links{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .contact-links a{
+    display:inline-block;
+    text-decoration:none;
+    color:var(--sage);
+    font-size:.98rem;
+    border-bottom:1px solid transparent;
+    transition:color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .contact-links a:hover{
+    color:var(--ice);
+    border-color:var(--ice);
+    transform:translateX(6px);
+  }
+  .foot-bottom{
+    padding-top:22px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    font-size:.78rem;
+    color:var(--paper);
+    opacity:.65;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .foot-bottom span{
+    transition:opacity .25s ease, color .25s ease;
+  }
+  .foot-bottom span:hover{
+    opacity:1;
+    color:var(--ice);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .hero-frame{ max-width:320px; }
+    .about-grid{ grid-template-columns:1fr; }
+    .project-grid{ grid-template-columns:1fr; }
+    .contact-inner{ grid-template-columns:1fr; align-items:start; }
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:none;
+  }
+  .project-grid .reveal:nth-child(2){ transition-delay:.08s; }
+  .project-grid .reveal:nth-child(3){ transition-delay:.16s; }
+  .project-grid .reveal:nth-child(4){ transition-delay:.24s; }
+  .edu-list .reveal:nth-child(2){ transition-delay:.1s; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+    }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="#" class="nav-mark">Port<span>folio</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="hero-kicker mono">Imus, Cavite — Philippines</p>
+      <h1>Daniel S. Infante Jr.<br><em>Front-End &amp; Game Developer</em></h1>
+      <p class="role">IT graduate who spent the past two years building the parts of a game or app a player actually touches — menus, HUDs, maps, and the front end tying it together.</p>
+      <ul class="hero-meta">
+        <li>0995-761-8500</li>
+        <li>danielinfantejunior@gmail.com</li>
+        <li>BS Information Technology, 2026</li>
+      </ul>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-solid">See the work</a>
+        <a href="mailto:danielinfantejunior@gmail.com" class="btn btn-outline">Say hello</a>
+      </div>
+    </div>
+    <div class="hero-frame">
+      <div class="hero-frame-photo">
+        <img src="assets/Daniel_Picture.jpg" alt="Portrait of Daniel S. Infante Jr.">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="section-head" style="margin-bottom:24px;">
+        <span class="section-num mono">01</span>
+        <h2>About</h2>
+      </div>
+      <p>I'm an Information Technology graduate from the City of Imus, Cavite, with hands-on experience in game development, programming, and software development. During my internship at Kwanii Inc., I worked with Unity and Roblox Studio, where I programmed gameplay mechanics, implemented UI systems and functions, developed maps, integrated animations, and troubleshot backend issues.</p>
+      <p>I enjoy working on both the technical and creative sides of development. I have experience with C#, C++, Python, HTML, CSS, and MySQL, and I'm comfortable learning new technologies and solving problems through code. Whether I'm building a gameplay system, developing an interface, or debugging an issue, I focus on creating projects that are functional, reliable, and enjoyable to use.</p>
+    </div>
+    <div class="skills reveal" style="transition-delay:.12s;">
+      <dl>
+        <div class="skill-row">
+          <dt>Programming</dt>
+          <dd>C++, Python, C#</dd>
+        </div>
+        <div class="skill-row">
+          <dt>Web</dt>
+          <dd>HTML, CSS, front-end UI implementation</dd>
+        </div>
+        <div class="skill-row">
+          <dt>Design</dt>
+          <dd>UI/UX design, map design, character &amp; asset layout</dd>
+        </div>
+        <div class="skill-row">
+          <dt>Database</dt>
+          <dd>MySQL</dd>
+        </div>
+        <div class="skill-row">
+          <dt>Tooling</dt>
+          <dd>Unity, Roblox Studio</dd>
+        </div>
+        <div class="skill-row">
+          <dt>Networking</dt>
+          <dd>Basic troubleshooting</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">02</span>
+      <h2>Selected work</h2>
+      <hr>
+    </div>
+    <div class="project-grid">
+
+      <article class="card reveal">
+        <div class="card-media">
+          <img src="assets/chicken_war.png" alt="Unity editor view of Chicken War, an endless-runner with a chicken avatar dodging traffic">
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>Kwanii Inc. — Intern</span>
+            <span>2025–2026</span>
+          </div>
+          <h3>Chicken War</h3>
+          <p>An endless-runner built in Unity, where a chicken dodges traffic for a growing cash multiplier. Built the interactive UI buttons and their logic, wired up the front-end navigation flow, integrated animations for the game's assets, and tracked down backend bugs affecting stability.</p>
+          <div class="card-tags"><span>Unity</span><span>C#</span><span>UI Systems</span></div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-media">
+          <img src="assets/Laser_Wars.png" alt="First-person view from Laser Wars, a 5v5 Roblox shooter set on a snowy map">
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>Kwanii Inc. — Intern</span>
+            <span>2025–2026</span>
+          </div>
+          <h3>Laser Wars</h3>
+          <p>A 5v5 competitive FPS built in Roblox Studio. Designed and implemented the in-match UI, built out the lobby and battle maps, and scripted core gameplay mechanics armor, shields, and ability cooldowns among them.</p>
+          <div class="card-tags"><span>Roblox Studio</span><span>Lua</span><span>Map Design</span></div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-media">
+          <img src="assets/Battle_Of_Mactan_.png" alt="In-game screenshot from Warriors of Mactan showing a quest prompt at a campfire">
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>Game Designer</span>
+            <span>Feb–Nov 2025</span>
+          </div>
+          <h3>Warriors of Mactan</h3>
+          <p>A 3D PC game retelling the Battle of Mactan. Designed the game's map and led the writing and historical preparation behind the story, keeping the pacing and setting faithful to the events being depicted.</p>
+          <div class="card-tags"><span>Unity</span><span>Narrative</span><span>Level Design</span></div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-media">
+          <img src="assets/cinechill.png" alt="CineChill ticket machine interface with buy ticket, check schedule, and edit ticket options">
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>Front End Designer</span>
+            <span>Dec 2023–Feb 2024</span>
+          </div>
+          <h3>CineChill Ticket Machine</h3>
+          <p>A self-service kiosk concept for buying movie tickets. I designed the full interface from the landing screen down to the schedule and ticket-editing flows aiming for something a first-time user could operate without instructions.</p>
+          <div class="card-tags"><span>UI Design</span><span>HTML/CSS</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">03</span>
+      <h2>Education</h2>
+      <hr>
+    </div>
+    <ul class="edu-list">
+      <li class="edu-item reveal">
+        <span class="edu-year mono">2025–2026</span>
+        <img class="edu-logo" src="assets/NCST_Logo.png" alt="National College of Science and Technology logo">
+        <div>
+          <h3>Bachelor of Science in Information Technology</h3>
+          <p>National College of Science and Technology, Dasmariñas, Cavite</p>
+        </div>
+      </li>
+      <li class="edu-item reveal">
+        <span class="edu-year mono">2020–2022</span>
+        <img class="edu-logo" src="assets/Emilio_Aguinaldo.png" alt="Emilio Aguinaldo College logo">
+        <div>
+          <h3>TVL-ICT — Information &amp; Communication Technology</h3>
+          <p>Emilio Aguinaldo College, Dasmariñas, Cavite</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer id="contact" class="contact">
+  <div class="wrap">
+    <div class="contact-inner reveal">
+      <h2>Let's build something worth interacting with.</h2>
+      <ul class="contact-links">
+        <li><a href="mailto:danielinfantejunior@gmail.com">danielinfantejunior@gmail.com</a></li>
+        <li><a href="tel:+639957618500">0995-761-8500</a></li>
+        <li>City of Imus, Cavite, Philippines</li>
+      </ul>
+    </div>
+    <div class="wrap foot-bottom" style="padding:0;">
+      <span>© 2026 Daniel S. Infante Jr.</span>
+      <span>Built with HTML &amp; CSS</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('is-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function(el){ observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
